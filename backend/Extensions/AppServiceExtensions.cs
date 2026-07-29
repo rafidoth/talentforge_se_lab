@@ -1,0 +1,12 @@
+using server.Services.UserServices;
+
+namespace server.Extensions;
+
+public static class AppServiceExtensions
+{
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+    {
+        services.AddScoped<IAuthService, AuthService>();
+        return services;
+    }
+}

@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddIdentityHandlersAndStores();
+builder.Services.AddApplicationServices();
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
