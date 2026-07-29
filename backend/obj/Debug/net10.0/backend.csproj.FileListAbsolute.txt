@@ -118,3 +118,5 @@
 /home/rafi/works/Talentforge/tf-copy/backend/obj/Debug/net10.0/backend.pdb
 /home/rafi/works/Talentforge/tf-copy/backend/obj/Debug/net10.0/backend.genruntimeconfig.cache
 /home/rafi/works/Talentforge/tf-copy/backend/obj/Debug/net10.0/ref/backend.dll
+/home/rafi/works/Talentforge/tf-copy/backend/bin/Debug/net10.0/appsettings.Development.json
+/home/rafi/works/Talentforge/tf-copy/backend/bin/Debug/net10.0/appsettings.json
