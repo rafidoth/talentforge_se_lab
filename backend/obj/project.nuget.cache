@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "qnW9/ujlYqI=",
+  "dgSpecHash": "2OiqwNLTEq4=",
   "success": true,
   "projectFilePath": "/home/rafi/works/Talentforge/tf-copy/backend/backend.csproj",
   "expectedPackageFiles": [
@@ -25,6 +25,7 @@
     "/home/rafi/.nuget/packages/mono.texttemplating/3.0.0/mono.texttemplating.3.0.0.nupkg.sha512",
     "/home/rafi/.nuget/packages/npgsql/9.0.2/npgsql.9.0.2.nupkg.sha512",
     "/home/rafi/.nuget/packages/npgsql.entityframeworkcore.postgresql/9.0.3/npgsql.entityframeworkcore.postgresql.9.0.3.nupkg.sha512",
+    "/home/rafi/.nuget/packages/scalar.aspnetcore/1.2.76/scalar.aspnetcore.1.2.76.nupkg.sha512",
     "/home/rafi/.nuget/packages/system.codedom/6.0.0/system.codedom.6.0.0.nupkg.sha512",
     "/home/rafi/.nuget/packages/system.composition/7.0.0/system.composition.7.0.0.nupkg.sha512",
     "/home/rafi/.nuget/packages/system.composition.attributedmodel/7.0.0/system.composition.attributedmodel.7.0.0.nupkg.sha512",

@@ -11,7 +11,8 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "10.0.0-preview.1.25120.3",
           "Microsoft.AspNetCore.OpenApi": "10.0.0-preview.1.25120.3",
           "Microsoft.EntityFrameworkCore.Design": "10.0.0-preview.1.25081.1",
-          "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.3"
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.3",
+          "Scalar.AspNetCore": "1.2.76"
         },
         "runtime": {
           "backend.dll": {}
@@ -427,6 +428,14 @@
           }
         }
       },
+      "Scalar.AspNetCore/1.2.76": {
+        "runtime": {
+          "lib/net9.0/Scalar.AspNetCore.dll": {
+            "assemblyVersion": "1.2.76.0",
+            "fileVersion": "1.2.76.0"
+          }
+        }
+      },
       "System.CodeDom/6.0.0": {
         "runtime": {
           "lib/net6.0/System.CodeDom.dll": {
@@ -635,6 +644,13 @@
       "sha512": "sha512-1A6HpMPbzK+quxdtug1aDHI4BSRTgpi7OaDt8WQh7SFJd2sSQ0nNTZ7sYrwyxVf4AdKdN7XJL9tpiiJjRUaa4g==",
       "path": "npgsql.entityframeworkcore.postgresql/9.0.3",
       "hashPath": "npgsql.entityframeworkcore.postgresql.9.0.3.nupkg.sha512"
+    },
+    "Scalar.AspNetCore/1.2.76": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-90ZxLgqZhkEDN8aGbY/QQTCHKVPcVkomCKFRZsh+yGICMqrpjEYmnVHRb3IUssyDd1kO3P6BnGUNRliz4fTe6g==",
+      "path": "scalar.aspnetcore/1.2.76",
+      "hashPath": "scalar.aspnetcore.1.2.76.nupkg.sha512"
     },
     "System.CodeDom/6.0.0": {
       "type": "package",
