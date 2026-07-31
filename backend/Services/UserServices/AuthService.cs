@@ -11,6 +11,37 @@ namespace server.Services.UserServices;
 
 public class AuthService(SignInManager<ApplicationUser> signInManager, ApplicationDbContext db) : IAuthService
 {
+    public async Task<LoginResponse> LoginAsync(LoginDto loginDto)
+    {
+        var user = await GetUserByEmailAsync(loginDto.Email);
+        if (user == null)
+        {
+            throw new UnauthorizedException("Invalid login attempt.");
+        }
+
+        var signInResult = await SignInUserAsync(user, loginDto.Password, isPersistent: false);
+        if (signInResult.Succeeded)
+        {
+            user.LastLoginAt = DateTime.UtcNow;
+            await signInManager.UserManager.UpdateAsync(user);
+
+            var role = await GetUserRoleAsync(user);
+            return new LoginResponse(true, user.Id, role);
+        }
+        throw new UnauthorizedException("Invalid login attempt.");
+    }
+
+    public async Task<string> GetUserRoleAsync(ApplicationUser user)
+    {
+        var roles = await signInManager.UserManager.GetRolesAsync(user);
+        return roles.FirstOrDefault() ?? Roles.Candidate;
+    }
+
+    public async Task LogoutAsync()
+    {
+        await signInManager.SignOutAsync();
+    }
+
     public async Task<ApplicationUser?> GetUserByEmailAsync(string email)
     {
         return await signInManager.UserManager.FindByEmailAsync(email);

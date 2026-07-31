@@ -7,6 +7,9 @@ namespace server.Services.UserServices;
 public interface IAuthService
 {
     Task<RegisterResponse> RegisterAsync(RegisterDto request);
+    Task<LoginResponse> LoginAsync(LoginDto loginDto);
+    Task<string> GetUserRoleAsync(ApplicationUser user);
+    Task LogoutAsync();
     Task<ApplicationUser?> GetUserByEmailAsync(string email);
     Task<IdentityResult> CreateNewUserAsync(ApplicationUser user, string password);
     Task<IdentityResult> AssignRoleAsync(ApplicationUser user, string role);
