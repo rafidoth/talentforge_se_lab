@@ -13,3 +13,10 @@ public record RegisterDto(
 );
 
 public record RegisterResponse(bool Success, string UserId, string Role = Roles.Candidate);
+
+public record LoginDto(
+    [Required] [EmailAddress] string Email, 
+    [Required] string Password
+);
+
+public record LoginResponse(bool Success, string UserId, string Role = Roles.Candidate);
