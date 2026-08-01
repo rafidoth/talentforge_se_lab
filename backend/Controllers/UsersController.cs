@@ -39,4 +39,14 @@ public class UsersController(IUserService userService) : ControllerBase
         if (!result.IsSuccess) return BadRequest(result);
         return Ok(result);
     }
+    [HttpPost("assign-role")]
+    public async Task<IActionResult> AssignRoleToUsers([FromBody] UserManagementActionDto dto)
+    {
+        if (string.IsNullOrEmpty(dto.RoleName))
+            return BadRequest("RoleName is required.");
+            
+        var result = await userService.AssignRoleToUserAsync(dto.UserIds, dto.RoleName);
+        if (!result.IsSuccess) return BadRequest(result);
+        return Ok(result);
+    }
 }
