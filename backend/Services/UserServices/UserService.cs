@@ -66,8 +66,53 @@ public class UserService(
         return query;
     }
 
-    public Task<ServiceResult<bool>> BlockUserAsync(List<string> userIds) => throw new NotImplementedException();
-    public Task<ServiceResult<bool>> UnblockUserAsync(List<string> userIds) => throw new NotImplementedException();
+    public async Task<ServiceResult<bool>> BlockUserAsync(List<string> userIds)
+    {
+        return await UpdateUserStatusAsync(userIds, UserStatus.Blocked);
+    }
+    public async Task<ServiceResult<bool>> UnblockUserAsync(List<string> userIds)
+    {
+        return await UpdateUserStatusAsync(userIds, UserStatus.Active);
+    }
+
+    private async Task<ServiceResult<bool>> UpdateUserStatusAsync(List<string> userIds, string newStatus)
+    {
+        if (userIds == null || userIds.Count == 0)
+            return ServiceResult<bool>.Failure("No user IDs provided.", "NO_USER_IDS");
+        try
+        {
+            var users = await db.Users.Where(u => userIds.Contains(u.Id)).ToListAsync();
+            foreach (var user in users)
+                user.Status = newStatus;
+            int rowsAffected = await db.SaveChangesAsync();
+            if (rowsAffected != userIds.Distinct().Count())
+                throw new Exception("Not all users status were updated successfully, some failed.");
+            return ServiceResult<bool>.Success(true, "Users updated successfully.");
+        }
+        catch (Exception ex)
+        {
+            return ServiceResult<bool>.Failure(ex.Message, "UPDATING_USERS_FAILED");
+        }
+    }
     public Task<ServiceResult<bool>> AssignRoleToUserAsync(List<string> userIds, string roleName) => throw new NotImplementedException();
-    public Task<ServiceResult<bool>> DeleteUserAsync(List<string> userIds) => throw new NotImplementedException();
+    public async Task<ServiceResult<bool>> DeleteUserAsync(List<string> userIds)
+    {
+        if (userIds == null || userIds.Count == 0)
+            return ServiceResult<bool>.Failure("No user IDs provided.", "NO_USER_IDS");
+        try
+        {
+            int rowsAffected = await db.Users
+                .Where(u => userIds.Contains(u.Id))
+                .ExecuteDeleteAsync();
+
+            if (rowsAffected != userIds.Distinct().Count())
+                throw new Exception("Not all users were deleted successfully, some failed.");
+
+            return ServiceResult<bool>.Success(true, "Users deleted successfully.");
+        }
+        catch (Exception ex)
+        {
+            return ServiceResult<bool>.Failure(ex.Message, "DELETING_USERS_FAILED");
+        }
+    }
 }
