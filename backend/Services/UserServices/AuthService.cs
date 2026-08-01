@@ -42,6 +42,11 @@ public class AuthService(SignInManager<ApplicationUser> signInManager, Applicati
         await signInManager.SignOutAsync();
     }
 
+    public async Task<ApplicationUser?> GetUserByClaimsPrincipalAsync(System.Security.Claims.ClaimsPrincipal User)
+    {
+        return await signInManager.UserManager.GetUserAsync(User);
+    }
+
     public async Task<ApplicationUser?> GetUserByEmailAsync(string email)
     {
         return await signInManager.UserManager.FindByEmailAsync(email);

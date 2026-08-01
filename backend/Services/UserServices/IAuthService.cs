@@ -10,6 +10,7 @@ public interface IAuthService
     Task<LoginResponse> LoginAsync(LoginDto loginDto);
     Task<string> GetUserRoleAsync(ApplicationUser user);
     Task LogoutAsync();
+    Task<ApplicationUser?> GetUserByClaimsPrincipalAsync(System.Security.Claims.ClaimsPrincipal User);
     Task<ApplicationUser?> GetUserByEmailAsync(string email);
     Task<IdentityResult> CreateNewUserAsync(ApplicationUser user, string password);
     Task<IdentityResult> AssignRoleAsync(ApplicationUser user, string role);
