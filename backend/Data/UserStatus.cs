@@ -1,8 +1,7 @@
 namespace server.Data;
 
-public enum UserStatus
+public class UserStatus
 {
-    Active,
-    Suspended,
-    Deleted
+    public static readonly string Active = "Active";
+    public static readonly string Blocked = "Blocked";
 }

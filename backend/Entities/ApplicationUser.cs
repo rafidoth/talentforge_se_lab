@@ -10,5 +10,5 @@ public class ApplicationUser : IdentityUser
     public string LastName { get; set; } = string.Empty;
     public DateTime? JoinedAt { get; set; }
     public DateTime? LastLoginAt { get; set; }
-    public UserStatus Status { get; set; }
+    public string Status { get; set; } = server.Data.UserStatus.Active;
 }
