@@ -32,4 +32,11 @@ public class UsersController(IUserService userService) : ControllerBase
         if (!result.IsSuccess) return BadRequest(result);
         return Ok(result);
     }
+    [HttpDelete]
+    public async Task<IActionResult> DeleteUser(UserManagementActionDto dto)
+    {
+        var result = await userService.DeleteUserAsync(dto.UserIds);
+        if (!result.IsSuccess) return BadRequest(result);
+        return Ok(result);
+    }
 }
