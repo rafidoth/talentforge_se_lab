@@ -94,7 +94,33 @@ public class UserService(
             return ServiceResult<bool>.Failure(ex.Message, "UPDATING_USERS_FAILED");
         }
     }
-    public Task<ServiceResult<bool>> AssignRoleToUserAsync(List<string> userIds, string roleName) => throw new NotImplementedException();
+    public async Task<ServiceResult<bool>> AssignRoleToUserAsync(
+        List<string> userIds,
+        [AllowedValues(Roles.Candidate, Roles.Recruiter, Roles.Admin)] string role
+    )
+    {
+        try
+        {
+            var uRoles = await db.UserRoles
+                .Where(ur => userIds.Contains(ur.UserId))
+                .ToListAsync();
+            var newRole = await db.Roles.FirstOrDefaultAsync(r => r.Name == role);
+
+            db.UserRoles.RemoveRange(uRoles);
+            var newUserRoles = userIds.Select(userId => new IdentityUserRole<string>
+            {
+                UserId = userId,
+                RoleId = newRole!.Id
+            });
+            await db.UserRoles.AddRangeAsync(newUserRoles);
+            await db.SaveChangesAsync();
+            return ServiceResult<bool>.Success(true, "Role assigned successfully.");
+        }
+        catch (Exception ex)
+        {
+            return ServiceResult<bool>.Failure(ex.Message, "ROLE_ASSIGNMENT_FAILED");
+        }
+    }
     public async Task<ServiceResult<bool>> DeleteUserAsync(List<string> userIds)
     {
         if (userIds == null || userIds.Count == 0)
