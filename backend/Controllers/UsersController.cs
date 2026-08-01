@@ -16,4 +16,20 @@ public class UsersController(IUserService userService) : ControllerBase
         var result = await userService.GetUsersAsync(filter);
         return Ok(result);
     }
+
+    [HttpPost("block")]
+    public async Task<IActionResult> BlockUser(UserManagementActionDto dto)
+    {
+        var result = await userService.BlockUserAsync(dto.UserIds);
+        if (!result.IsSuccess) return BadRequest(result);
+        return Ok(result);
+    }
+
+    [HttpPost("unblock")]
+    public async Task<IActionResult> UnblockUser(UserManagementActionDto dto)
+    {
+        var result = await userService.UnblockUserAsync(dto.UserIds);
+        if (!result.IsSuccess) return BadRequest(result);
+        return Ok(result);
+    }
 }
