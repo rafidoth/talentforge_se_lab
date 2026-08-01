@@ -8,6 +8,7 @@ public static class AppServiceExtensions
     {
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IUserPreferenceService, UserPreferenceService>();
         return services;
     }
 }
