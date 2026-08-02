@@ -132,4 +132,29 @@ public class ProfileService(ApplicationDbContext db, server.Services.AttributeLi
                 throw new Exception($"Invalid value type for attribute '{attribute.Name}'. Expected a string.");
         }
     }
+
+    public async Task UpdateAttributeValueInProfileAsync(
+            string userId,
+            UpdateProfileAttributeValueDto dto
+    )
+    {
+        var profileAttribute = await db.ProfileAttributes
+            .Include(pa => pa.Attribute)
+                .ThenInclude(a => a.Type)
+            .FirstOrDefaultAsync(pa => pa.Id == dto.ProfileAttributeId && pa.UserId == userId) ??
+            throw new Exception("Profile Attribute not found");
+            
+        try
+        {
+            ValidateAttributeValueType(profileAttribute.Attribute, dto.Value);
+            profileAttribute.Value = dto.Value;
+            profileAttribute.UpdatedAt = DateTime.UtcNow;
+            db.Entry(profileAttribute).Property<uint>("Version").OriginalValue = dto.Version;
+            await db.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new Exception("Conflict: Refresh and Try Again");
+        }
+    }
 }

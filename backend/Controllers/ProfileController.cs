@@ -42,4 +42,13 @@ public class ProfileController(
         await profileService.AddAttributeToProfileAsync(user.Id, dto);
         return Ok(new { message = "Attribute added to profile successfully." });
     }
+
+    [HttpPut("attributes")]
+    public async Task<IActionResult> UpdateAttributeValueInProfile([FromBody] UpdateProfileAttributeValueDto dto)
+    {
+        var user = await authService.GetUserByClaimsPrincipalAsync(User);
+        if (user == null) return Unauthorized();
+        await profileService.UpdateAttributeValueInProfileAsync(user.Id, dto);
+        return Ok(new { message = "Attribute updated successfully." });
+    }
 }
