@@ -9,6 +9,7 @@ public static class AppServiceExtensions
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IUserPreferenceService, UserPreferenceService>();
+        services.AddScoped<server.Services.ProfileServices.IProfileService, server.Services.ProfileServices.ProfileService>();
         return services;
     }
 }
