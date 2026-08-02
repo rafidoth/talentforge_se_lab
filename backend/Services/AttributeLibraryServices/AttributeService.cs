@@ -13,4 +13,14 @@ public class AttributeService(ApplicationDbContext db) : IAttributeService
         return await db.Attributes.Include(a => a.Type).FirstOrDefaultAsync(a => a.Id == id) 
             ?? throw new Exception("Attribute not found");
     }
+
+    public Task<System.Collections.Generic.List<server.Dto.AttributeCategoryDto>> GetCategoriesAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<System.Collections.Generic.List<AttributeType>> GetAttributeTypesAsync()
+    {
+        throw new NotImplementedException();
+    }
 }
