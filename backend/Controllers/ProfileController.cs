@@ -24,4 +24,13 @@ public class ProfileController(
         var result = await profileService.GetMeSectionAsync(user.Id);
         return Ok(result);
     }
+    
+    [HttpPut("me")]
+    public async Task<IActionResult> UpdateMe([FromBody] UpdateMeSectionDto dto)
+    {
+        var user = await authService.GetUserByClaimsPrincipalAsync(User);
+        if (user == null) return Unauthorized();
+        var result = await profileService.UpdateMeSectionAsync(user, dto);
+        return Ok(result);
+    }
 }
