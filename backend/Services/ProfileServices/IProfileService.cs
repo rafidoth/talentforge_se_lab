@@ -8,4 +8,5 @@ public interface IProfileService
 {
     Task<MeSectionDto> GetMeSectionAsync(string userId);
     Task<MeSectionDto> UpdateMeSectionAsync(ApplicationUser user, UpdateMeSectionDto dto);
+    Task AddAttributeToProfileAsync(string userId, AddProfileAttributeDto dto);
 }

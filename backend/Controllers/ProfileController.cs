@@ -33,4 +33,13 @@ public class ProfileController(
         var result = await profileService.UpdateMeSectionAsync(user, dto);
         return Ok(result);
     }
+    
+    [HttpPost("attributes")]
+    public async Task<IActionResult> AddAttributeToProfile([FromBody] AddProfileAttributeDto dto)
+    {
+        var user = await authService.GetUserByClaimsPrincipalAsync(User);
+        if (user == null) return Unauthorized();
+        await profileService.AddAttributeToProfileAsync(user.Id, dto);
+        return Ok(new { message = "Attribute added to profile successfully." });
+    }
 }

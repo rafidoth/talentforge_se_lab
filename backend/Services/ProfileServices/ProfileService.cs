@@ -8,7 +8,7 @@ using server.Entities;
 
 namespace server.Services.ProfileServices;
 
-public class ProfileService(ApplicationDbContext db) : IProfileService
+public class ProfileService(ApplicationDbContext db, server.Services.AttributeLibraryServices.IAttributeService attrs) : IProfileService
 {
     public async Task<MeSectionDto> GetMeSectionAsync(string userId)
     {
@@ -102,5 +102,34 @@ public class ProfileService(ApplicationDbContext db) : IProfileService
         }
 
         return profileAttributes;
+    }
+    
+    public async Task AddAttributeToProfileAsync(string userId, AddProfileAttributeDto dto)
+    {
+        var attribute = await attrs.GetAttributeEntityByIdAsync(dto.AttributeId);
+        ValidateAttributeValueType(attribute, dto.Value);
+        var profileAttribute = new ProfileAttribute
+        {
+            UserId = userId,
+            AttributeId = attribute.Id,
+            Value = dto.Value,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        };
+        await db.ProfileAttributes.AddAsync(profileAttribute);
+        await db.SaveChangesAsync();
+    }
+
+    private void ValidateAttributeValueType(AppAttribute attribute, System.Text.Json.JsonElement value)
+    {
+        var stringRelatedTypes = new System.Collections.Generic.List<string> {
+            AttributeTypes.String, AttributeTypes.Text, AttributeTypes.Image, AttributeTypes.OneToMany
+        };
+
+        if (stringRelatedTypes.Contains(attribute.Type!.Name))
+        {
+            if (value.ValueKind != System.Text.Json.JsonValueKind.String)
+                throw new Exception($"Invalid value type for attribute '{attribute.Name}'. Expected a string.");
+        }
     }
 }
