@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using server.Data;
 using server.Entities;
+using System.Linq;
 
 namespace server.Services.AttributeLibraryServices;
 
@@ -14,13 +15,17 @@ public class AttributeService(ApplicationDbContext db) : IAttributeService
             ?? throw new Exception("Attribute not found");
     }
 
-    public Task<System.Collections.Generic.List<server.Dto.AttributeCategoryDto>> GetCategoriesAsync()
+    public async Task<System.Collections.Generic.List<server.Dto.AttributeCategoryDto>> GetCategoriesAsync()
     {
-        throw new NotImplementedException();
+        var categories = await db.AttributeCategories.ToListAsync();
+        return categories.Select(c => new server.Dto.AttributeCategoryDto(c.Id, c.Name)).ToList();
     }
 
-    public Task<System.Collections.Generic.List<AttributeType>> GetAttributeTypesAsync()
+    public async Task<System.Collections.Generic.List<AttributeType>> GetAttributeTypesAsync()
     {
-        throw new NotImplementedException();
+        var types = await db.AttributeTypes.ToListAsync();
+        if (types == null || types.Count == 0)
+            throw new Exception("No attribute types found.");
+        return types;
     }
 }
