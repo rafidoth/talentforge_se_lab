@@ -9,4 +9,5 @@ public interface IAttributeService
     Task<AppAttribute> GetAttributeEntityByIdAsync(Guid id);
     Task<System.Collections.Generic.List<server.Dto.AttributeCategoryDto>> GetCategoriesAsync();
     Task<System.Collections.Generic.List<AttributeType>> GetAttributeTypesAsync();
+    Task<server.Dto.AttributeDto> CreateAttributeAsync(server.Dto.CreateAttributeDto dto);
 }

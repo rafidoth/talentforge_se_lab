@@ -28,4 +28,9 @@ public class AttributeService(ApplicationDbContext db) : IAttributeService
             throw new Exception("No attribute types found.");
         return types;
     }
+
+    public Task<server.Dto.AttributeDto> CreateAttributeAsync(server.Dto.CreateAttributeDto dto)
+    {
+        throw new NotImplementedException();
+    }
 }
