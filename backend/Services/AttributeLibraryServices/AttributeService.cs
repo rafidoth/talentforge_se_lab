@@ -124,4 +124,9 @@ public class AttributeService(ApplicationDbContext db) : IAttributeService
 
         return await GetAttributeDtoByIdAsync(attribute.Id);
     }
+
+    public Task<bool> DeleteAttributeAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
 }

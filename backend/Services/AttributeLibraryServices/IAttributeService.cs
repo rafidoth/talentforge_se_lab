@@ -11,4 +11,5 @@ public interface IAttributeService
     Task<System.Collections.Generic.List<AttributeType>> GetAttributeTypesAsync();
     Task<server.Dto.AttributeDto> CreateAttributeAsync(server.Dto.CreateAttributeDto dto);
     Task<server.Dto.AttributeDto> UpdateAttributeAsync(Guid id, server.Dto.UpdateAttributeDto dto);
+    Task<bool> DeleteAttributeAsync(Guid id);
 }
