@@ -78,8 +78,36 @@ public class AttributeService(ApplicationDbContext db) : IAttributeService
         };
     }
 
-    public Task<server.Dto.AttributeDto> UpdateAttributeAsync(Guid id, server.Dto.UpdateAttributeDto dto)
+    public async Task<server.Dto.AttributeDto> UpdateAttributeAsync(Guid id, server.Dto.UpdateAttributeDto dto)
     {
-        throw new NotImplementedException();
+        using var transaction = await db.Database.BeginTransactionAsync();
+        var attribute = await GetAttributeEntityByIdAsync(id);
+
+        if (attribute.IsBuiltin)
+            throw new Exception("Built-in attributes cannot be modified.");
+
+        if (!string.IsNullOrWhiteSpace(dto.Name))
+            attribute.Name = dto.Name;
+            
+        if (!string.IsNullOrWhiteSpace(dto.Description))
+            attribute.Description = dto.Description;
+
+        db.Entry(attribute).Property<uint>("Version").OriginalValue = dto.Version;
+
+        try
+        {
+            await db.SaveChangesAsync();
+            await transaction.CommitAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new Exception("The attribute was modified by another user. Please refresh and try again.");
+        }
+        catch (DbUpdateException)
+        {
+            throw new Exception($"An attribute with the name '{dto.Name}' already exists.");
+        }
+
+        return await GetAttributeDtoByIdAsync(attribute.Id);
     }
 }
