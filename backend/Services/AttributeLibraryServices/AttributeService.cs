@@ -132,6 +132,8 @@ public class AttributeService(ApplicationDbContext db) : IAttributeService
         if (attribute.IsBuiltin)
             throw new Exception("Built-in attributes cannot be deleted.");
 
+        db.Attributes.Remove(attribute);
+        await db.SaveChangesAsync();
         return true;
     }
 }
