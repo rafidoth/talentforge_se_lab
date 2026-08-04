@@ -29,3 +29,10 @@ public record AttributeDto
     public List<DropdownOptionDto>? DropdownOptions { get; init; }
     public uint Version { get; init; }
 }
+
+public record UpdateAttributeDto(
+    string? Name,
+    string? Description,
+    List<string>? DropdownOptions,
+    uint Version
+);
