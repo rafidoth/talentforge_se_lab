@@ -31,4 +31,12 @@ public class AttributeController(IAttributeService attributeService) : Controlle
         var result = await attributeService.CreateAttributeAsync(dto);
         return CreatedAtAction(nameof(GetAttributeTypesAndCategories), new { id = result.Id }, result);
     }
+
+    [Authorize(Roles = Roles.AdminOrRecruiter)]
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateAttribute(Guid id, [FromBody] UpdateAttributeDto dto)
+    {
+        var result = await attributeService.UpdateAttributeAsync(id, dto);
+        return Ok(result);
+    }
 }
