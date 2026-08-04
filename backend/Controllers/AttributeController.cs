@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using server.Data;
+using server.Dto;
 using Microsoft.AspNetCore.Mvc;
 using server.Services.AttributeLibraryServices;
 
@@ -20,5 +22,13 @@ public class AttributeController(IAttributeService attributeService) : Controlle
             Categories = categories,
             Types = types
         });
+    }
+
+    [Authorize(Roles = Roles.AdminOrRecruiter)]
+    [HttpPost]
+    public async Task<IActionResult> CreateAttribute([FromBody] CreateAttributeDto dto)
+    {
+        var result = await attributeService.CreateAttributeAsync(dto);
+        return CreatedAtAction(nameof(GetAttributeTypesAndCategories), new { id = result.Id }, result);
     }
 }
