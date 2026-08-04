@@ -77,4 +77,9 @@ public class AttributeService(ApplicationDbContext db) : IAttributeService
             Version = version
         };
     }
+
+    public Task<server.Dto.AttributeDto> UpdateAttributeAsync(Guid id, server.Dto.UpdateAttributeDto dto)
+    {
+        throw new NotImplementedException();
+    }
 }
