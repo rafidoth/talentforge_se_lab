@@ -94,6 +94,20 @@ public class AttributeService(ApplicationDbContext db) : IAttributeService
 
         db.Entry(attribute).Property<uint>("Version").OriginalValue = dto.Version;
 
+        if (dto.DropdownOptions != null)
+        {
+            db.AttributeDropdownOptions.RemoveRange(attribute.DropdownOptions);
+            foreach (var label in dto.DropdownOptions)
+            {
+                db.AttributeDropdownOptions.Add(new AttributeDropdownOption
+                {
+                    Id = Guid.NewGuid(),
+                    AttributeId = attribute.Id,
+                    Label = label
+                });
+            }
+        }
+
         try
         {
             await db.SaveChangesAsync();
