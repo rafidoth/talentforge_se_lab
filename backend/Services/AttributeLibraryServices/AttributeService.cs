@@ -41,6 +41,19 @@ public class AttributeService(ApplicationDbContext db) : IAttributeService
             IsBuiltin = false
         };
 
+        if (dto.DropdownOptions != null && dto.DropdownOptions.Count > 0)
+        {
+            foreach (var label in dto.DropdownOptions)
+            {
+                attribute.DropdownOptions.Add(new AttributeDropdownOption
+                {
+                    Id = Guid.NewGuid(),
+                    AttributeId = attribute.Id,
+                    Label = label
+                });
+            }
+        }
+
         db.Attributes.Add(attribute);
         await db.SaveChangesAsync();
 
