@@ -29,8 +29,39 @@ public class AttributeService(ApplicationDbContext db) : IAttributeService
         return types;
     }
 
-    public Task<server.Dto.AttributeDto> CreateAttributeAsync(server.Dto.CreateAttributeDto dto)
+    public async Task<server.Dto.AttributeDto> CreateAttributeAsync(server.Dto.CreateAttributeDto dto)
     {
-        throw new NotImplementedException();
+        var attribute = new AppAttribute
+        {
+            Id = Guid.NewGuid(),
+            Name = dto.Name,
+            TypeId = dto.TypeId,
+            CategoryId = dto.CategoryId,
+            Description = dto.Description,
+            IsBuiltin = false
+        };
+
+        db.Attributes.Add(attribute);
+        await db.SaveChangesAsync();
+
+        return await GetAttributeDtoByIdAsync(attribute.Id);
+    }
+    
+    public async Task<server.Dto.AttributeDto> GetAttributeDtoByIdAsync(Guid id)
+    {
+        var attribute = await GetAttributeEntityByIdAsync(id);
+        var version = db.Entry(attribute).Property<uint>("Version").CurrentValue;
+        return new server.Dto.AttributeDto
+        {
+            Id = attribute.Id,
+            Name = attribute.Name,
+            TypeId = attribute.TypeId ?? 0,
+            TypeName = attribute.Type?.Name ?? string.Empty,
+            CategoryId = attribute.CategoryId ?? 0,
+            CategoryName = attribute.Category?.Name ?? string.Empty,
+            IsBuiltin = attribute.IsBuiltin,
+            DropdownOptions = attribute.DropdownOptions.Select(o => new server.Dto.DropdownOptionDto(o.Id, o.Label)).ToList(),
+            Version = version
+        };
     }
 }
