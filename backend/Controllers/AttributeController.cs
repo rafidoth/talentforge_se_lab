@@ -39,4 +39,12 @@ public class AttributeController(IAttributeService attributeService) : Controlle
         var result = await attributeService.UpdateAttributeAsync(id, dto);
         return Ok(result);
     }
+
+    [Authorize(Roles = Roles.AdminOrRecruiter)]
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteAttribute(Guid id)
+    {
+        await attributeService.DeleteAttributeAsync(id);
+        return NoContent();
+    }
 }
