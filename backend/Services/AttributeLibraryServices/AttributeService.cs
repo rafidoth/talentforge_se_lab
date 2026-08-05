@@ -150,6 +150,12 @@ public class AttributeService(ApplicationDbContext db) : IAttributeService
             
         if (dto.CategoryId.HasValue)
             query = query.Where(a => a.CategoryId == dto.CategoryId.Value);
+            
+        if (dto.Recent)
+        {
+            query = query.Where(a => a.ProfileAttributes.Any())
+                         .OrderByDescending(a => a.ProfileAttributes.Max(pa => pa.UpdatedAt));
+        }
 
         var dtoQuery = query.Select(a => new server.Dto.AttributeDto
         {
