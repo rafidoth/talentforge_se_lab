@@ -12,4 +12,5 @@ public interface IAttributeService
     Task<server.Dto.AttributeDto> CreateAttributeAsync(server.Dto.CreateAttributeDto dto);
     Task<server.Dto.AttributeDto> UpdateAttributeAsync(Guid id, server.Dto.UpdateAttributeDto dto);
     Task<bool> DeleteAttributeAsync(Guid id);
+    Task<server.Dto.AttributeDto> GetAttributeDtoByIdAsync(Guid id);
 }
