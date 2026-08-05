@@ -137,8 +137,34 @@ public class AttributeService(ApplicationDbContext db) : IAttributeService
         return true;
     }
 
-    public Task<server.Utils.PagedResponse<server.Dto.AttributeDto>> SearchAsync(server.Dto.AttributeSearchQueryDto dto)
+    public async Task<server.Utils.PagedResponse<server.Dto.AttributeDto>> SearchAsync(server.Dto.AttributeSearchQueryDto dto)
     {
-        throw new NotImplementedException();
+        var query = db.Attributes
+            .Include(a => a.Type)
+            .Include(a => a.Category)
+            .Include(a => a.DropdownOptions)
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(dto.Prefix))
+            query = query.Where(a => a.Name.ToLower().StartsWith(dto.Prefix.ToLower()));
+            
+        if (dto.CategoryId.HasValue)
+            query = query.Where(a => a.CategoryId == dto.CategoryId.Value);
+
+        var dtoQuery = query.Select(a => new server.Dto.AttributeDto
+        {
+            Id = a.Id,
+            Name = a.Name,
+            Description = a.Description ?? string.Empty,
+            TypeId = a.TypeId ?? 0,
+            TypeName = a.Type != null ? a.Type.Name : string.Empty,
+            CategoryId = a.CategoryId ?? 0,
+            CategoryName = a.Category != null ? a.Category.Name : string.Empty,
+            IsBuiltin = a.IsBuiltin,
+            DropdownOptions = a.DropdownOptions.Select(o => new server.Dto.DropdownOptionDto(o.Id, o.Label)).ToList(),
+            Version = EF.Property<uint>(a, "Version")
+        });
+
+        return await server.Utils.PagedResponse.CreateAsync(dtoQuery, dto.Page, dto.PageSize);
     }
 }
