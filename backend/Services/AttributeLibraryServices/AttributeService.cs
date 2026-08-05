@@ -136,4 +136,9 @@ public class AttributeService(ApplicationDbContext db) : IAttributeService
         await db.SaveChangesAsync();
         return true;
     }
+
+    public Task<server.Utils.PagedResponse<server.Dto.AttributeDto>> SearchAsync(server.Dto.AttributeSearchQueryDto dto)
+    {
+        throw new NotImplementedException();
+    }
 }
