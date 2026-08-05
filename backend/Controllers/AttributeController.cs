@@ -47,4 +47,11 @@ public class AttributeController(IAttributeService attributeService) : Controlle
         await attributeService.DeleteAttributeAsync(id);
         return NoContent();
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetAttributeById(Guid id)
+    {
+        var result = await attributeService.GetAttributeDtoByIdAsync(id);
+        return Ok(result);
+    }
 }
