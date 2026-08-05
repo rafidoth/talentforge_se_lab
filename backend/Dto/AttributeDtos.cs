@@ -36,3 +36,11 @@ public record UpdateAttributeDto(
     List<string>? DropdownOptions,
     uint Version
 );
+
+public record AttributeSearchQueryDto(
+    string? Prefix = null,
+    int? CategoryId = null,
+    bool Recent = false,
+    int Page = 1,
+    int PageSize = 10
+);
