@@ -54,4 +54,11 @@ public class AttributeController(IAttributeService attributeService) : Controlle
         var result = await attributeService.GetAttributeDtoByIdAsync(id);
         return Ok(result);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> SearchAttributes([FromQuery] AttributeSearchQueryDto dto)
+    {
+        var result = await attributeService.SearchAsync(dto);
+        return Ok(result);
+    }
 }
