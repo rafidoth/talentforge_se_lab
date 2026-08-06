@@ -157,4 +157,9 @@ public class ProfileService(ApplicationDbContext db, server.Services.AttributeLi
             throw new Exception("Conflict: Refresh and Try Again");
         }
     }
+
+    public Task<System.Collections.Generic.List<server.Dto.ProfileAttributeDto>> GetNonBuiltInAttributesAsync(string userId)
+    {
+        throw new NotImplementedException();
+    }
 }
