@@ -51,4 +51,13 @@ public class ProfileController(
         await profileService.UpdateAttributeValueInProfileAsync(user.Id, dto);
         return Ok(new { message = "Attribute updated successfully." });
     }
+
+    [HttpGet("attributes/non-built-in")]
+    public async Task<IActionResult> GetNonBuiltInAttributes()
+    {
+        var user = await authService.GetUserByClaimsPrincipalAsync(User);
+        if (user == null) return Unauthorized();
+        var attributes = await profileService.GetNonBuiltInAttributesAsync(user.Id);
+        return Ok(attributes);
+    }
 }
