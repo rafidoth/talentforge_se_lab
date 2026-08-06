@@ -158,8 +158,28 @@ public class ProfileService(ApplicationDbContext db, server.Services.AttributeLi
         }
     }
 
-    public Task<System.Collections.Generic.List<server.Dto.ProfileAttributeDto>> GetNonBuiltInAttributesAsync(string userId)
+    public async Task<System.Collections.Generic.List<server.Dto.ProfileAttributeDto>> GetNonBuiltInAttributesAsync(string userId)
     {
-        throw new NotImplementedException();
+        var attributes = await db.ProfileAttributes
+            .Include(pa => pa.Attribute)
+                .ThenInclude(a => a.Type)
+            .Include(pa => pa.Attribute)
+                .ThenInclude(a => a.Category)
+            .Include(pa => pa.Attribute)
+                .ThenInclude(a => a.DropdownOptions)
+            .Where(pa => pa.UserId == userId && !pa.Attribute.IsBuiltin)
+            .ToListAsync();
+            
+        return attributes.Select(pa => new server.Dto.ProfileAttributeDto
+        {
+            Id = pa.Id,
+            AttributeId = pa.AttributeId,
+            AttributeName = pa.Attribute.Name,
+            TypeName = pa.Attribute.Type!.Name,
+            CategoryName = pa.Attribute.Category!.Name,
+            Value = pa.Value,
+            Version = EF.Property<uint>(pa, "Version"),
+            DropdownOptions = pa.Attribute.DropdownOptions.Select(d => new server.Dto.DropdownOptionDto(d.Id, d.Label)).ToList()
+        }).ToList();
     }
 }
