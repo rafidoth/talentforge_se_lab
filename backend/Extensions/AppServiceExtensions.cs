@@ -11,6 +11,7 @@ public static class AppServiceExtensions
         services.AddScoped<IUserPreferenceService, UserPreferenceService>();
         services.AddScoped<server.Services.ProfileServices.IProfileService, server.Services.ProfileServices.ProfileService>();
         services.AddScoped<server.Services.AttributeLibraryServices.IAttributeService, server.Services.AttributeLibraryServices.AttributeService>();
+        services.AddScoped<server.Services.ProjectServices.IProjectsService, server.Services.ProjectServices.ProjectsService>();
         return services;
     }
 }
