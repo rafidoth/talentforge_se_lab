@@ -16,6 +16,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<AttributeCategory> AttributeCategories { get; set; }
     public DbSet<AttributeType> AttributeTypes { get; set; }
     public DbSet<AttributeDropdownOption> AttributeDropdownOptions { get; set; }
+    public DbSet<Project> Projects { get; set; }
+    public DbSet<TechnologyTag> TechnologyTags { get; set; }
+    public DbSet<ProjectTechnologyTag> ProjectTechnologyTags { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
