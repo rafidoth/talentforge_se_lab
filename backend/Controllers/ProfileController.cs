@@ -5,6 +5,7 @@ using server.Dto;
 using server.Entities;
 using server.Services.ProfileServices;
 using server.Services.UserServices;
+using server.Services.ProjectServices;
 
 namespace server.Controllers;
 
@@ -13,7 +14,8 @@ namespace server.Controllers;
 [Route("api/profile")]
 public class ProfileController(
     IProfileService profileService,
-    IAuthService authService
+    IAuthService authService,
+    IProjectsService projectsService
 ) : ControllerBase
 {
     [HttpGet("me")]
@@ -59,5 +61,14 @@ public class ProfileController(
         if (user == null) return Unauthorized();
         var attributes = await profileService.GetNonBuiltInAttributesAsync(user.Id);
         return Ok(attributes);
+    }
+
+    [HttpGet("projects")]
+    public async Task<IActionResult> GetProjects()
+    {
+        var user = await authService.GetUserByClaimsPrincipalAsync(User);
+        if (user == null) return Unauthorized();
+        var projects = await projectsService.GetCandidateProjectsAsync(user.Id);
+        return Ok(projects);
     }
 }
