@@ -25,6 +25,7 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
             StartDate = p.StartDate,
             EndDate = p.EndDate,
             Description = p.Description,
+            Tags = p.ProjectTechnologyTags.Select(pt => new TagDto(pt.Tag.Id, pt.Tag.Name)).ToList(),
             Version = EF.Property<uint>(p, "Version")
         }).ToList();
     }
