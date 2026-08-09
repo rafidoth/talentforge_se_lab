@@ -42,6 +42,19 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
             Description = dto.Description
         };
 
+        if (dto.Tags != null && dto.Tags.Count > 0)
+        {
+            var tags = await db.TechnologyTags.Where(t => dto.Tags.Contains(t.Id)).ToListAsync();
+            if (tags.Count != dto.Tags.Count) throw new Exception("Some tags were not found.");
+            
+            project.ProjectTechnologyTags = tags.Select(t => new server.Entities.ProjectTechnologyTag 
+            { 
+                ProjectId = project.Id, 
+                TagId = t.Id, 
+                Tag = t 
+            }).ToList();
+        }
+
         await db.Projects.AddAsync(project);
         await db.SaveChangesAsync();
 
@@ -52,7 +65,7 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
             StartDate = project.StartDate,
             EndDate = project.EndDate,
             Description = project.Description,
-            Tags = new List<TagDto>(),
+            Tags = project.ProjectTechnologyTags?.Select(pt => new TagDto(pt.TagId, pt.Tag.Name)).ToList() ?? new List<TagDto>(),
             Version = EF.Property<uint>(project, "Version")
         };
     }
