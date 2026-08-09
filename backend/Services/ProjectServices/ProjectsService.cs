@@ -87,6 +87,23 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
         if (dto.Description != null) project.Description = dto.Description;
         project.UpdatedAt = DateTime.UtcNow;
 
+        if (dto.Tags != null)
+        {
+            db.ProjectTechnologyTags.RemoveRange(project.ProjectTechnologyTags);
+            if (dto.Tags.Count > 0)
+            {
+                var tags = await db.TechnologyTags.Where(t => dto.Tags.Contains(t.Id)).ToListAsync();
+                if (tags.Count != dto.Tags.Count) throw new Exception("Some tags were not found.");
+                
+                project.ProjectTechnologyTags = tags.Select(t => new server.Entities.ProjectTechnologyTag 
+                { 
+                    ProjectId = project.Id, 
+                    TagId = t.Id, 
+                    Tag = t 
+                }).ToList();
+            }
+        }
+
         return new ProjectDto();
     }
 }
