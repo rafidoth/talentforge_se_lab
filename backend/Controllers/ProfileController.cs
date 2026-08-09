@@ -71,4 +71,13 @@ public class ProfileController(
         var projects = await projectsService.GetCandidateProjectsAsync(user.Id);
         return Ok(projects);
     }
+
+    [HttpPost("projects")]
+    public async Task<IActionResult> CreateProject([FromBody] CreateProjectDto dto)
+    {
+        var user = await authService.GetUserByClaimsPrincipalAsync(User);
+        if (user == null) return Unauthorized();
+        var project = await projectsService.CreateProjectAsync(user.Id, dto);
+        return CreatedAtAction(nameof(GetProjects), new { id = project.Id }, project);
+    }
 }
