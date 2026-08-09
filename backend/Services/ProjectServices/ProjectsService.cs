@@ -30,8 +30,30 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
         }).ToList();
     }
 
-    public Task<ProjectDto> CreateProjectAsync(string userId, CreateProjectDto dto)
+    public async Task<ProjectDto> CreateProjectAsync(string userId, CreateProjectDto dto)
     {
-        throw new NotImplementedException();
+        var project = new server.Entities.Project
+        {
+            Id = Guid.NewGuid(),
+            UserId = userId,
+            Name = dto.Name,
+            StartDate = dto.StartDate,
+            EndDate = dto.EndDate,
+            Description = dto.Description
+        };
+
+        await db.Projects.AddAsync(project);
+        await db.SaveChangesAsync();
+
+        return new ProjectDto
+        {
+            Id = project.Id,
+            Name = project.Name,
+            StartDate = project.StartDate,
+            EndDate = project.EndDate,
+            Description = project.Description,
+            Tags = new List<TagDto>(),
+            Version = EF.Property<uint>(project, "Version")
+        };
     }
 }
