@@ -29,3 +29,15 @@ public record CreateProjectDto
     public string? Description { get; set; }
     public List<Guid>? Tags { get; set; }
 }
+
+public record UpdateProjectDto
+{
+    public string? Name { get; set; }
+    public DateOnly? StartDate { get; set; }
+    public DateOnly? EndDate { get; set; }
+    public string? Description { get; set; }
+    public List<Guid>? Tags { get; set; }
+
+    [Required]
+    public uint Version { get; set; }
+}
