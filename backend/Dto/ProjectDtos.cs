@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using System.ComponentModel.DataAnnotations;
+
 namespace server.Dto;
 
 public record TagDto(Guid Id, string Name);
@@ -14,4 +16,16 @@ public record ProjectDto
     public string? Description { get; set; }
     public List<TagDto> Tags { get; set; } = [];
     public uint Version { get; set; }
+}
+
+public record CreateProjectDto
+{
+    [Required(ErrorMessage = "Project name is required.")]
+    [MaxLength(255, ErrorMessage = "Project name cannot exceed 255 characters.")]
+    public string Name { get; set; } = string.Empty;
+
+    public DateOnly? StartDate { get; set; }
+    public DateOnly? EndDate { get; set; }
+    public string? Description { get; set; }
+    public List<Guid>? Tags { get; set; }
 }
