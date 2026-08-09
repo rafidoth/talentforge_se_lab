@@ -32,6 +32,7 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
 
     public async Task<ProjectDto> CreateProjectAsync(string userId, CreateProjectDto dto)
     {
+        using var transaction = await db.Database.BeginTransactionAsync();
         var project = new server.Entities.Project
         {
             Id = Guid.NewGuid(),
@@ -57,6 +58,7 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
 
         await db.Projects.AddAsync(project);
         await db.SaveChangesAsync();
+        await transaction.CommitAsync();
 
         return new ProjectDto
         {
