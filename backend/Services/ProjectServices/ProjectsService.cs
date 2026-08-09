@@ -79,6 +79,7 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
                 .ThenInclude(pt => pt.Tag)
             .FirstOrDefaultAsync(p => p.Id == projectId && p.UserId == userId);
             
+        using var transaction = await db.Database.BeginTransactionAsync();
         if (project == null) throw new Exception("Project not found.");
 
         if (!string.IsNullOrWhiteSpace(dto.Name)) project.Name = dto.Name;
@@ -104,6 +105,27 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
             }
         }
 
-        return new ProjectDto();
+        db.Entry(project).Property<uint>("Version").OriginalValue = dto.Version;
+
+        try
+        {
+            await db.SaveChangesAsync();
+            await transaction.CommitAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            throw new Exception("Conflict: Refresh and Try Again");
+        }
+
+        return new ProjectDto
+        {
+            Id = project.Id,
+            Name = project.Name,
+            StartDate = project.StartDate,
+            EndDate = project.EndDate,
+            Description = project.Description,
+            Tags = project.ProjectTechnologyTags.Select(pt => new TagDto(pt.TagId, pt.Tag.Name)).ToList(),
+            Version = EF.Property<uint>(project, "Version")
+        };
     }
 }
