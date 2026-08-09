@@ -72,8 +72,21 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
         };
     }
 
-    public Task<ProjectDto> UpdateProjectAsync(string userId, Guid projectId, UpdateProjectDto dto)
+    public async Task<ProjectDto> UpdateProjectAsync(string userId, Guid projectId, UpdateProjectDto dto)
     {
-        throw new NotImplementedException();
+        var project = await db.Projects
+            .Include(p => p.ProjectTechnologyTags)
+                .ThenInclude(pt => pt.Tag)
+            .FirstOrDefaultAsync(p => p.Id == projectId && p.UserId == userId);
+            
+        if (project == null) throw new Exception("Project not found.");
+
+        if (!string.IsNullOrWhiteSpace(dto.Name)) project.Name = dto.Name;
+        if (dto.StartDate.HasValue) project.StartDate = dto.StartDate;
+        if (dto.EndDate.HasValue) project.EndDate = dto.EndDate;
+        if (dto.Description != null) project.Description = dto.Description;
+        project.UpdatedAt = DateTime.UtcNow;
+
+        return new ProjectDto();
     }
 }
