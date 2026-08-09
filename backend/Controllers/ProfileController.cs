@@ -80,4 +80,13 @@ public class ProfileController(
         var project = await projectsService.CreateProjectAsync(user.Id, dto);
         return CreatedAtAction(nameof(GetProjects), new { id = project.Id }, project);
     }
+
+    [HttpPut("projects/{id}")]
+    public async Task<IActionResult> UpdateProject(Guid id, [FromBody] UpdateProjectDto dto)
+    {
+        var user = await authService.GetUserByClaimsPrincipalAsync(User);
+        if (user == null) return Unauthorized();
+        var project = await projectsService.UpdateProjectAsync(user.Id, id, dto);
+        return Ok(project);
+    }
 }
