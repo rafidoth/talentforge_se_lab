@@ -29,4 +29,9 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
             Version = EF.Property<uint>(p, "Version")
         }).ToList();
     }
+
+    public Task<ProjectDto> CreateProjectAsync(string userId, CreateProjectDto dto)
+    {
+        throw new NotImplementedException();
+    }
 }
