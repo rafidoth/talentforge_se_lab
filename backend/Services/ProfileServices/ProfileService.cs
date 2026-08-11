@@ -196,7 +196,9 @@ public class ProfileService(ApplicationDbContext db, server.Services.AttributeLi
                 Email = user.Email ?? "",
                 Status = user.Status ?? "",
                 JoinedAt = user.JoinedAt ?? DateTime.UtcNow
-            }
+            },
+            MeSection = await GetMeSectionAsync(candidateId),
+            Attributes = await GetNonBuiltInAttributesAsync(candidateId)
         };
     }
 }
