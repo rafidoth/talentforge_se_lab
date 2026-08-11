@@ -129,8 +129,11 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
         };
     }
 
-    public Task DeleteProjectAsync(string userId, Guid projectId)
+    public async Task DeleteProjectAsync(string userId, Guid projectId)
     {
-        throw new NotImplementedException();
+        var project = await db.Projects
+            .FirstOrDefaultAsync(p => p.Id == projectId && p.UserId == userId);
+            
+        if (project == null) throw new Exception("Project not found.");
     }
 }
