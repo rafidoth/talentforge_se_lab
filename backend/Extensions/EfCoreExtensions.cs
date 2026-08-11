@@ -9,7 +9,7 @@ public static class EfCoreExtensions
     {
         services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+            options.UseNpgsql(configuration.GetConnectionString("PG") ?? configuration.GetConnectionString("DefaultConnection"));
         });
         
         return services;

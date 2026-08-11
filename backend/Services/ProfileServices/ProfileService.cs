@@ -169,19 +169,20 @@ public class ProfileService(ApplicationDbContext db, server.Services.AttributeLi
             .Include(pa => pa.Attribute)
                 .ThenInclude(a => a.DropdownOptions)
             .Where(pa => pa.UserId == userId && !pa.Attribute.IsBuiltin)
+            .Select(pa => new server.Dto.ProfileAttributeDto
+            {
+                Id = pa.Id,
+                AttributeId = pa.AttributeId,
+                AttributeName = pa.Attribute.Name,
+                TypeName = pa.Attribute.Type!.Name,
+                CategoryName = pa.Attribute.Category!.Name,
+                Value = pa.Value,
+                Version = EF.Property<uint>(pa, "Version"),
+                DropdownOptions = pa.Attribute.DropdownOptions.Select(d => new server.Dto.DropdownOptionDto(d.Id, d.Label)).ToList()
+            })
             .ToListAsync();
             
-        return attributes.Select(pa => new server.Dto.ProfileAttributeDto
-        {
-            Id = pa.Id,
-            AttributeId = pa.AttributeId,
-            AttributeName = pa.Attribute.Name,
-            TypeName = pa.Attribute.Type!.Name,
-            CategoryName = pa.Attribute.Category!.Name,
-            Value = pa.Value,
-            Version = EF.Property<uint>(pa, "Version"),
-            DropdownOptions = pa.Attribute.DropdownOptions.Select(d => new server.Dto.DropdownOptionDto(d.Id, d.Label)).ToList()
-        }).ToList();
+        return attributes;
     }
 
     public async Task<server.Dto.CandidateFullProfileDto> GetCandidateFullProfileAsync(string candidateId)
@@ -196,7 +197,7 @@ public class ProfileService(ApplicationDbContext db, server.Services.AttributeLi
             {
                 Email = user.Email ?? "",
                 Status = user.Status ?? "",
-                JoinedAt = user.JoinedAt ?? DateTime.UtcNow
+                JoinedAt = user.JoinedAt
             },
             MeSection = await GetMeSectionAsync(candidateId),
             Attributes = await GetNonBuiltInAttributesAsync(candidateId),

@@ -16,18 +16,19 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
             .Include(p => p.ProjectTechnologyTags)
                 .ThenInclude(pt => pt.Tag)
             .Where(p => p.UserId == userId)
+            .Select(p => new ProjectDto
+            {
+                Id = p.Id,
+                Name = p.Name,
+                StartDate = p.StartDate,
+                EndDate = p.EndDate,
+                Description = p.Description,
+                Tags = p.ProjectTechnologyTags.Select(pt => new TagDto(pt.Tag.Id, pt.Tag.Name)).ToList(),
+                Version = EF.Property<uint>(p, "Version")
+            })
             .ToListAsync();
             
-        return projects.Select(p => new ProjectDto
-        {
-            Id = p.Id,
-            Name = p.Name,
-            StartDate = p.StartDate,
-            EndDate = p.EndDate,
-            Description = p.Description,
-            Tags = p.ProjectTechnologyTags.Select(pt => new TagDto(pt.Tag.Id, pt.Tag.Name)).ToList(),
-            Version = EF.Property<uint>(p, "Version")
-        }).ToList();
+        return projects;
     }
 
     public async Task<ProjectDto> CreateProjectAsync(string userId, CreateProjectDto dto)
@@ -68,7 +69,7 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
             EndDate = project.EndDate,
             Description = project.Description,
             Tags = project.ProjectTechnologyTags?.Select(pt => new TagDto(pt.TagId, pt.Tag.Name)).ToList() ?? new List<TagDto>(),
-            Version = EF.Property<uint>(project, "Version")
+            Version = db.Entry(project).Property<uint>("Version").CurrentValue
         };
     }
 
@@ -125,7 +126,7 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
             EndDate = project.EndDate,
             Description = project.Description,
             Tags = project.ProjectTechnologyTags.Select(pt => new TagDto(pt.TagId, pt.Tag.Name)).ToList(),
-            Version = EF.Property<uint>(project, "Version")
+            Version = db.Entry(project).Property<uint>("Version").CurrentValue
         };
     }
 

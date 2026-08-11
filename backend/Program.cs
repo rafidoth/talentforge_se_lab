@@ -6,7 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddIdentityHandlersAndStores();
+builder.Services.AddIdentityAuth(builder.Configuration);
 builder.Services.AddApplicationServices();
+
+builder.Services.AddCorsPolicy(builder.Configuration);
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
@@ -15,10 +18,10 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
+app.ConfigureCorsPolicy();
 app.ConfigureApiDoc();
 app.UseExceptionHandler();
-app.UseAuthentication();
-app.UseAuthorization();
+app.ConfigureIdentityAuth();
 app.MapControllers();
 
 app.Run();

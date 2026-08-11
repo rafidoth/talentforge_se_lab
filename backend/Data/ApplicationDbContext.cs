@@ -23,8 +23,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.ApplyConfiguration(new server.Data.configurations.UserPreferenceConfiguration());
-        builder.ApplyConfiguration(new server.Data.Configurations.AttributeConfiguration());
-        builder.ApplyConfiguration(new server.Data.Configurations.ProfileAttributeConfiguration());
+        builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 }
