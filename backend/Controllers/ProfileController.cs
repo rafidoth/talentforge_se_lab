@@ -107,4 +107,12 @@ public class ProfileController(
         var result = await projectsService.SearchProjectsAsync(user.Id, dto);
         return Ok(result);
     }
+
+    [HttpGet("candidate/{candidateId}/full")]
+    [Authorize(Roles = server.Data.Roles.AdminOrRecruiter)]
+    public async Task<IActionResult> GetCandidateFullProfile(string candidateId)
+    {
+        var profile = await profileService.GetCandidateFullProfileAsync(candidateId);
+        return Ok(profile);
+    }
 }
