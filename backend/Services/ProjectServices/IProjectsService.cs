@@ -10,4 +10,5 @@ public interface IProjectsService
     Task<ProjectDto> CreateProjectAsync(string userId, CreateProjectDto dto);
     Task<ProjectDto> UpdateProjectAsync(string userId, Guid projectId, UpdateProjectDto dto);
     Task DeleteProjectAsync(string userId, Guid projectId);
+    Task<server.Utils.PagedResponse<ProjectDto>> SearchProjectsAsync(string userId, ProjectSearchQueryDto dto);
 }

@@ -139,4 +139,9 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
         db.Projects.Remove(project);
         await db.SaveChangesAsync();
     }
+
+    public Task<server.Utils.PagedResponse<ProjectDto>> SearchProjectsAsync(string userId, ProjectSearchQueryDto dto)
+    {
+        throw new NotImplementedException();
+    }
 }
