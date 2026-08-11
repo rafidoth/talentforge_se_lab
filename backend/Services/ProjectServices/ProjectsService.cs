@@ -135,5 +135,7 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
             .FirstOrDefaultAsync(p => p.Id == projectId && p.UserId == userId);
             
         if (project == null) throw new Exception("Project not found.");
+
+        db.Projects.Remove(project);
     }
 }
