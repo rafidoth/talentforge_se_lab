@@ -140,8 +140,34 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
         await db.SaveChangesAsync();
     }
 
-    public Task<server.Utils.PagedResponse<ProjectDto>> SearchProjectsAsync(string userId, ProjectSearchQueryDto dto)
+    public async Task<server.Utils.PagedResponse<ProjectDto>> SearchProjectsAsync(string userId, ProjectSearchQueryDto dto)
     {
-        throw new NotImplementedException();
+        var query = db.Projects
+            .Where(p => p.UserId == userId)
+            .Include(p => p.ProjectTechnologyTags).ThenInclude(pt => pt.Tag)
+            .AsQueryable();
+
+        if (dto.TagIds != null && dto.TagIds.Any())
+        {
+            query = query.Where(p => p.ProjectTechnologyTags.Any(pt => dto.TagIds.Contains(pt.TagId)));
+        }
+
+        if (dto.Recent)
+            query = query.OrderByDescending(p => p.CreatedAt).ThenByDescending(p => p.Id);
+        else
+            query = query.OrderByDescending(p => p.CreatedAt);
+
+        var dtoQuery = query.Select(p => new ProjectDto
+        {
+            Id = p.Id,
+            Name = p.Name,
+            StartDate = p.StartDate,
+            EndDate = p.EndDate,
+            Description = p.Description,
+            Tags = p.ProjectTechnologyTags.Select(pt => new TagDto(pt.Tag.Id, pt.Tag.Name)).ToList(),
+            Version = EF.Property<uint>(p, "Version")
+        });
+
+        return await server.Utils.PagedResponse.CreateAsync(dtoQuery, dto.Page, dto.PageSize, maxPageSize: 50);
     }
 }
