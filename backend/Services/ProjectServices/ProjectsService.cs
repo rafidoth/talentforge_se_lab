@@ -128,4 +128,9 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
             Version = EF.Property<uint>(project, "Version")
         };
     }
+
+    public Task DeleteProjectAsync(string userId, Guid projectId)
+    {
+        throw new NotImplementedException();
+    }
 }

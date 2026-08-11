@@ -9,4 +9,5 @@ public interface IProjectsService
     Task<List<ProjectDto>> GetCandidateProjectsAsync(string userId);
     Task<ProjectDto> CreateProjectAsync(string userId, CreateProjectDto dto);
     Task<ProjectDto> UpdateProjectAsync(string userId, Guid projectId, UpdateProjectDto dto);
+    Task DeleteProjectAsync(string userId, Guid projectId);
 }
