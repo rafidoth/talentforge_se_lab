@@ -49,3 +49,19 @@ public record UpdateMeSectionDto
     [MinLength(1, ErrorMessage = "No attributes provided for update.")]
     public List<UpdateProfileAttributeValueDto> Attributes { get; set; } = [];
 }
+
+public record InfoSectionDto
+{
+    public string Email { get; init; } = string.Empty;
+    public string Status { get; init; } = string.Empty;
+    public DateTime JoinedAt { get; init; }
+}
+
+public record CandidateFullProfileDto
+{
+    public string CandidateId { get; init; } = string.Empty;
+    public InfoSectionDto InfoSection { get; init; } = new();
+    public MeSectionDto MeSection { get; init; } = new();
+    public List<ProfileAttributeDto> Attributes { get; init; } = new();
+    public List<ProjectDto> Projects { get; init; } = new();
+}
