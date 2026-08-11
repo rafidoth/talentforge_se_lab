@@ -11,4 +11,5 @@ public interface IProfileService
     Task AddAttributeToProfileAsync(string userId, AddProfileAttributeDto dto);
     Task UpdateAttributeValueInProfileAsync(string userId, UpdateProfileAttributeValueDto dto);
     Task<System.Collections.Generic.List<server.Dto.ProfileAttributeDto>> GetNonBuiltInAttributesAsync(string userId);
+    Task<server.Dto.CandidateFullProfileDto> GetCandidateFullProfileAsync(string candidateId);
 }

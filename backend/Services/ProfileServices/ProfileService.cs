@@ -182,4 +182,21 @@ public class ProfileService(ApplicationDbContext db, server.Services.AttributeLi
             DropdownOptions = pa.Attribute.DropdownOptions.Select(d => new server.Dto.DropdownOptionDto(d.Id, d.Label)).ToList()
         }).ToList();
     }
+
+    public async Task<server.Dto.CandidateFullProfileDto> GetCandidateFullProfileAsync(string candidateId)
+    {
+        var user = await db.Users.FindAsync(candidateId);
+        if (user == null) throw new Exception("Candidate not found");
+        
+        return new server.Dto.CandidateFullProfileDto
+        {
+            CandidateId = candidateId,
+            InfoSection = new server.Dto.InfoSectionDto
+            {
+                Email = user.Email ?? "",
+                Status = user.Status ?? "",
+                JoinedAt = user.JoinedAt ?? DateTime.UtcNow
+            }
+        };
+    }
 }
