@@ -1,3 +1,4 @@
+using server.Services.ProjectServices;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using server.Entities;
 
 namespace server.Services.ProfileServices;
 
-public class ProfileService(ApplicationDbContext db, server.Services.AttributeLibraryServices.IAttributeService attrs) : IProfileService
+public class ProfileService(ApplicationDbContext db, server.Services.AttributeLibraryServices.IAttributeService attrs, IProjectsService projectsService) : IProfileService
 {
     public async Task<MeSectionDto> GetMeSectionAsync(string userId)
     {
@@ -198,7 +199,8 @@ public class ProfileService(ApplicationDbContext db, server.Services.AttributeLi
                 JoinedAt = user.JoinedAt ?? DateTime.UtcNow
             },
             MeSection = await GetMeSectionAsync(candidateId),
-            Attributes = await GetNonBuiltInAttributesAsync(candidateId)
+            Attributes = await GetNonBuiltInAttributesAsync(candidateId),
+            Projects = await projectsService.GetCandidateProjectsAsync(candidateId)
         };
     }
 }
