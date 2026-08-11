@@ -89,4 +89,13 @@ public class ProfileController(
         var project = await projectsService.UpdateProjectAsync(user.Id, id, dto);
         return Ok(project);
     }
+
+    [HttpDelete("projects/{id}")]
+    public async Task<IActionResult> DeleteProject(Guid id)
+    {
+        var user = await authService.GetUserByClaimsPrincipalAsync(User);
+        if (user == null) return Unauthorized();
+        await projectsService.DeleteProjectAsync(user.Id, id);
+        return NoContent();
+    }
 }
