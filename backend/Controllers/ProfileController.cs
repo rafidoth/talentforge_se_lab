@@ -98,4 +98,13 @@ public class ProfileController(
         await projectsService.DeleteProjectAsync(user.Id, id);
         return NoContent();
     }
+
+    [HttpPost("projects/search")]
+    public async Task<IActionResult> SearchProjects([FromBody] server.Dto.ProjectSearchQueryDto dto)
+    {
+        var user = await authService.GetUserByClaimsPrincipalAsync(User);
+        if (user == null) return Unauthorized();
+        var result = await projectsService.SearchProjectsAsync(user.Id, dto);
+        return Ok(result);
+    }
 }
