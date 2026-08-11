@@ -137,5 +137,6 @@ public class ProjectsService(ApplicationDbContext db) : IProjectsService
         if (project == null) throw new Exception("Project not found.");
 
         db.Projects.Remove(project);
+        await db.SaveChangesAsync();
     }
 }
