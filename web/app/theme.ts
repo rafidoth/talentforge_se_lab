@@ -94,3 +94,19 @@ const theme: MantineThemeOverride = {
             '#f783ac',
             '#f06595',
             '#e64980',
+            '#d6336c',
+            '#c2255c',
+            '#a61e4d'
+        ],
+        grape: [
+            '#f8f0fc',
+            '#f3d9fa',
+            '#eebefa',
+            '#e599f7',
+            '#da77f2',
+            '#cc5de8',
+            '#be4bdb',
+            '#ae3ec9',
+            '#9c36b5',
+            '#862e9c'
+        ],
