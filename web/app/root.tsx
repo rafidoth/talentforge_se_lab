@@ -62,3 +62,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body>
         <QueryClientProvider client={queryClient}>
           <MantineProvider theme={theme} forceColorScheme={colorScheme}>
+            {children}
+          </MantineProvider>
+        </QueryClientProvider>
+        <ScrollRestoration />
+        <Scripts />
+      </body>
+    </html>
+  );
+}
+
+import { RouteGuard } from "./auth/RouteGuard";
+
+export default function App() {
+  return (
+    <RouteGuard>
+      <Outlet />
