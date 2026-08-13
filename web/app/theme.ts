@@ -174,3 +174,19 @@ const theme: MantineThemeOverride = {
             '#dadeed',
             '#c5cde9',
             '#b1bce4',
+            '#9dace0',
+            '#889bdb',
+            '#889bdb',
+            '#4666ca',
+            '#284396',
+            '#142657',
+            '#030919'
+        ]
+    },
+    primaryColor: 'blue',
+    primaryShade: {
+        light: 6,
+        dark: 5
+    },
+    white: 'rgba(255, 255, 255, 1)',
+    black: 'rgba(20, 19, 19, 1)',
