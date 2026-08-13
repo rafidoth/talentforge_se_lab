@@ -110,3 +110,19 @@ const theme: MantineThemeOverride = {
             '#9c36b5',
             '#862e9c'
         ],
+        violet: [
+            '#f3f0ff',
+            '#e5dbff',
+            '#d0bfff',
+            '#b197fc',
+            '#9775fa',
+            '#845ef7',
+            '#7950f2',
+            '#7048e8',
+            '#6741d9',
+            '#5f3dc4'
+        ],
+        indigo: [
+            '#edf2ff',
+            '#dbe4ff',
+            '#bac8ff',
