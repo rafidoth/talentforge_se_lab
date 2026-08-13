@@ -206,3 +206,19 @@ const theme: MantineThemeOverride = {
         xs: '0.525rem',
         sm: '0.65rem',
         md: '0.9rem',
+        lg: '1.35rem',
+        xl: '2.2rem'
+    },
+    defaultRadius: 'xs',
+    breakpoints: {
+        xs: '36em',
+        sm: '48em',
+        md: '62em',
+        lg: '75em',
+        xl: '88em'
+    },
+    fontSmoothing: true,
+    respectReducedMotion: false,
+    focusRing: 'auto',
+    cursorType: 'default',
+    components: {
