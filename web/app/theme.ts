@@ -190,3 +190,19 @@ const theme: MantineThemeOverride = {
     },
     white: 'rgba(255, 255, 255, 1)',
     black: 'rgba(20, 19, 19, 1)',
+    autoContrast: true,
+    luminanceThreshold: 0.3,
+    fontFamily: 'Archivo, sans-serif',
+    fontFamilyMonospace: 'Roboto Mono',
+    scale: 1,
+    radius: {
+        xs: '0.2rem',
+        sm: '0.75rem',
+        md: '0.7rem',
+        lg: '1.2rem',
+        xl: '2.4rem'
+    },
+    spacing: {
+        xs: '0.525rem',
+        sm: '0.65rem',
+        md: '0.9rem',
