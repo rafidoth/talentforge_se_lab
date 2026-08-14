@@ -222,3 +222,19 @@ const theme: MantineThemeOverride = {
     focusRing: 'auto',
     cursorType: 'default',
     components: {
+        Input: {
+            defaultProps: {
+                variant: 'default',
+                radius: 'xl'
+            },
+            styles: {}
+        },
+        Card: {
+            defaultProps: {
+                withBorder: true
+            },
+            styles: {}
+        },
+        Table: {
+            defaultProps: {
+                highlightOnHover: true,
