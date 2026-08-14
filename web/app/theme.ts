@@ -238,3 +238,20 @@ const theme: MantineThemeOverride = {
         Table: {
             defaultProps: {
                 highlightOnHover: true,
+                highlightOnHoverColor: 'var(--mantine-color-default-hover)',
+                withRowBorders: true,
+                withColumnBorders: false,
+            },
+        },
+        Modal: {
+            defaultProps: {
+                overlayOpacity: 0.55,
+                overlayBlur: 3,
+                centered: true,
+                closeOnEscape: true,
+            },
+        },
+    }
+};
+
+export default theme;
