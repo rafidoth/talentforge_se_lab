@@ -1,0 +1,109 @@
+import api from "./index";
+import type { MeSectionDto, UpdateMeSectionDto, ProfileAttributeDto, AddProfileAttributeDto, UpdateProfileAttributeValueDto, ProjectDto, CreateProjectDto, UpdateProjectDto, TagDto, CandidatePositionAttributesDto, ProjectSearchQueryDto, PaginatedResponse, SyncSalesforceProfileDto, SalesforceStatusResponse } from "./types";
+
+export async function fetchMeSection(): Promise<MeSectionDto> {
+    const res = await api.get<MeSectionDto>("/profile/me");
+    return res.data;
+}
+
+export async function updateMeSection(dto: UpdateMeSectionDto): Promise<void> {
+    await api.put("/profile/me", dto);
+}
+
+export async function fetchProfileAttributes(): Promise<ProfileAttributeDto[]> {
+    const res = await api.get<ProfileAttributeDto[]>("/profile/attributes/non-built-in");
+    return res.data;
+}
+
+export async function addProfileAttribute(dto: AddProfileAttributeDto): Promise<void> {
+    await api.post("/profile/attributes", dto);
+}
+
+export async function updateProfileAttribute(dto: UpdateProfileAttributeValueDto): Promise<void> {
+    await api.put("/profile/attributes", dto);
+}
+
+export async function deleteProfileAttribute(profileAttributeId: string): Promise<void> {
+    await api.delete(`/profile/attributes/${profileAttributeId}`);
+}
+
+export async function fetchProjects(): Promise<ProjectDto[]> {
+    const res = await api.get<ProjectDto[]>("/profile/projects");
+    return res.data;
+}
+
+export async function searchProjects(dto: ProjectSearchQueryDto): Promise<PaginatedResponse<ProjectDto>> {
+    const res = await api.post<PaginatedResponse<ProjectDto>>("/profile/projects/search", dto);
+    return res.data;
+}
+
+export async function createProject(dto: CreateProjectDto): Promise<ProjectDto> {
+    const res = await api.post<ProjectDto>("/profile/projects", dto);
+    return res.data;
+}
+
+export async function updateProject(id: string, dto: UpdateProjectDto): Promise<ProjectDto> {
+    const res = await api.put<ProjectDto>(`/profile/projects/${id}`, dto);
+    return res.data;
+}
+
+export async function deleteProject(id: string): Promise<void> {
+    await api.delete(`/profile/projects/${id}`);
+}
+
+export async function searchTags(prefix: string, n: number = 10): Promise<TagDto[]> {
+    const res = await api.get<TagDto[]>("/tags", { params: { prefix, n } });
+    return res.data;
+}
+
+export async function createTag(name: string): Promise<TagDto> {
+    const res = await api.post<TagDto>("/tags", { name });
+    return res.data;
+}
+
+export async function fetchCandidatePositionAttributes(positionId: string): Promise<CandidatePositionAttributesDto> {
+    const res = await api.get<CandidatePositionAttributesDto>(`/profile/attributes/position/${positionId}`);
+    return res.data;
+}
+
+// Candidate Full Profile (for recruiters/admins viewing a candidate)
+
+export interface CandidateInfoSectionDto {
+    email: string;
+    status: string;
+    joinedAt: string;
+}
+
+export interface CandidateCvSummaryDto {
+    id: string;
+    candidateId: string;
+    positionId: string;
+    positionTitle: string;
+    candidateName: string;
+    isPublished: boolean;
+    createdAt: string;
+    likeCount: number;
+}
+
+export interface CandidateFullProfileDto {
+    candidateId: string;
+    infoSection: CandidateInfoSectionDto;
+    meSection: MeSectionDto;
+    attributes: ProfileAttributeDto[];
+    projects: ProjectDto[];
+    cvs: CandidateCvSummaryDto[];
+}
+
+export async function fetchCandidateFullProfile(candidateId: string): Promise<CandidateFullProfileDto> {
+    const res = await api.get<CandidateFullProfileDto>(`/profile/candidate/${candidateId}/full`);
+    return res.data;
+}
+
+export async function fetchSalesforceStatus(): Promise<SalesforceStatusResponse> {
+    const res = await api.get<SalesforceStatusResponse>("/profile/sf/status");
+    return res.data;
+}
+
+export async function syncSalesforceProfile(dto: SyncSalesforceProfileDto): Promise<void> {
+    await api.post("/profile/sf", dto);
+}
