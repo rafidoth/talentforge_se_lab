@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+.cvWrapper,
+.cvWrapper h1,
+.cvWrapper h2,
+.cvWrapper h3,
+.cvWrapper h4,
+.cvWrapper h5,
+.cvWrapper h6,
+.cvWrapper p,
+.cvWrapper span,
+.cvWrapper div,
+.cvWrapper input,
+.cvWrapper button {
+    font-family: "PT Serif", serif;
+}
+
+.missingAttribute {
+    background-color: light-dark(var(--mantine-color-red-1), var(--mantine-color-red-9));
+    border: 1px dashed light-dark(var(--mantine-color-red-5), var(--mantine-color-red-7));
+    color: light-dark(var(--mantine-color-red-8), var(--mantine-color-red-1));
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.attributeItem {
+    cursor: pointer;
+    position: relative;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.attributeItem:hover {
+    background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-6));
+}
+
+.editIcon {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.attributeItem:hover .editIcon {
+    opacity: 0.5;
+}
