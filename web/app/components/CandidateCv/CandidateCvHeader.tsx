@@ -42,3 +42,4 @@ export function CandidateCvHeader({ cvId, meAttributes }: CandidateCvHeaderProps
         </Stack>
     );
 }
+
