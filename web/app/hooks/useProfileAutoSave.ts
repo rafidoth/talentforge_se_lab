@@ -82,3 +82,4 @@ export function useProfileAutoSave({ attributes = [], mutate, autoSaveIntervalMs
         handleChange
     };
 }
+
