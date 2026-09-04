@@ -7,3 +7,4 @@ export const Roles = {
 export const PageSizes = {
     UsersManagement: 15,
 }
+
