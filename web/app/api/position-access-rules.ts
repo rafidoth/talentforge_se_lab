@@ -19,3 +19,4 @@ export const updatePositionAccessRule = async (positionId: string, ruleId: strin
 export const deletePositionAccessRule = async (positionId: string, ruleId: string) => {
   await api.delete(`/positions/${positionId}/access-rules/${ruleId}`);
 };
+
