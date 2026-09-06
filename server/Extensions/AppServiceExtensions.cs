@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Identity;
 using server.Entities;
 using server.Services.AttributeLibraryServices;
+using server.Services.PositionServices;
 using server.Services.ProfileServices;
 using server.Services.ProjectsServices;
 using server.Services.TagsServices;
 using server.Services.UserServices;
+using server.Services.CvServices;
 using server.Services.CloudinaryServices;
+using server.Services.SalesforceServices;
 using server.Utils;
 
 namespace server.Extensions
@@ -19,10 +22,16 @@ namespace server.Extensions
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserConfirmation<ApplicationUser>, UserConfirmation>();
+            services.AddScoped<IPositionService, PositionService>();
+            services.AddScoped<IPositionAttributeService, PositionAttributeService>();
+            services.AddScoped<IPositionTagsService, PositionTagsService>();
+            services.AddScoped<IPositionAccessRuleService, PositionAccessRuleService>();
             services.AddScoped<IProjectsService, ProjectsService>();
             services.AddScoped<ITagsService, TagsService>();
+            services.AddScoped<ICvService, CvService>();
             services.AddScoped<ICloudinaryService, CloudinaryService>();
             services.AddScoped<IUserPreferenceService, UserPreferenceService>();
+            services.AddScoped<ISalesforceService, SalesforceService>();
             return services;
         }
     }
