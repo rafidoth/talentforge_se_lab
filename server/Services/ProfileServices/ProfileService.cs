@@ -4,6 +4,7 @@ using server.Data;
 using server.Services.AttributeLibraryServices;
 using server.Services.CloudinaryServices;
 using server.Services.ProjectsServices;
+using server.Services.CvServices;
 
 namespace server.Services.ProfileServices
 {
@@ -11,6 +12,7 @@ namespace server.Services.ProfileServices
         ApplicationDbContext db,
         IAttributeService attrs,
         IProjectsService projectsService,
+        ICvService cvService,
         IConfiguration cfg,
         ICloudinaryService cloudinaryService
         ) : IProfileService
