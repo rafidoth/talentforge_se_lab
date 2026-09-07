@@ -60,4 +60,3 @@ export function DropdownOptionsEditor({ value = [], onChange }: DropdownOptionsE
         </Stack>
     );
 }
-
