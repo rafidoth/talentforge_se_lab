@@ -63,3 +63,4 @@ export function UserMenu({ avatarUrl, displayName, isLoading, currentTheme, onTo
         </Menu>
     );
 }
+
