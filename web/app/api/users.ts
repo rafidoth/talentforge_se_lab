@@ -21,4 +21,3 @@ export async function deleteUsers(userIds: string[]): Promise<void> {
 export async function assignRoleToUsers(userIds: string[], roleName: string): Promise<void> {
     await api.post('/users/assign-role', { userIds, roleName });
 }
-

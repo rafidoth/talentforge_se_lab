@@ -232,4 +232,3 @@ export interface SyncSalesforceProfileDto {
 export interface SalesforceStatusResponse {
   isSynced: boolean;
 }
-
