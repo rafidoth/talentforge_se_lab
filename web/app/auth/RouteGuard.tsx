@@ -41,4 +41,3 @@ export function RouteGuard({ children }: { children: ReactNode }) {
 
   return <>{children}</>;
 }
-

@@ -135,4 +135,3 @@ export function AuthLayout({ children }: AuthLayoutProps) {
     </Box>
   );
 }
-
