@@ -153,3 +153,4 @@ export function CandidateCv() {
         </Container>
     );
 }
+
