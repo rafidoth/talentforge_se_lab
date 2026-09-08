@@ -19,3 +19,4 @@ export function ProfileAttributeInputNumeric({ attribute, value, onChange }: Pro
     );
 }
 
+
