@@ -36,3 +36,4 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
         </RichTextEditor>
     );
 }
+
