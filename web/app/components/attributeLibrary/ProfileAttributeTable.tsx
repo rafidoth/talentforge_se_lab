@@ -67,4 +67,3 @@ export function ProfileAttributeTable({ attributes, profileAttributeMap, onRowCl
     </Table.ScrollContainer>
   );
 }
-
