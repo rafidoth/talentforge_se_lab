@@ -42,4 +42,3 @@ export function AppHeaderDrawer({ opened, onClose, tabs }: AppHeaderDrawerProps)
     </Drawer>
   );
 }
-
