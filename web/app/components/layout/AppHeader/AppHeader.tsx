@@ -78,4 +78,3 @@ export function AppHeader({ opened, toggle }: AppHeaderProps) {
     </AppShell.Header>
   );
 }
-
