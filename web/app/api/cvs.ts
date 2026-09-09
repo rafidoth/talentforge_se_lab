@@ -103,3 +103,4 @@ export async function likeCv(id: string): Promise<void> {
 export async function unlikeCv(id: string): Promise<void> {
     await api.delete(`/cvs/${id}/like`);
 }
+
