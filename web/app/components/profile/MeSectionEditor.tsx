@@ -45,6 +45,3 @@ export function MeSectionEditor({ attributes = [] }: MeSectionEditorProps) {
         </Paper>
     );
 }
-
-
-

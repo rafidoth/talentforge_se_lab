@@ -73,4 +73,3 @@ export function TechnologyTagsTab({ positionId }: TechnologyTagsTabProps) {
     </Card>
   );
 }
-
