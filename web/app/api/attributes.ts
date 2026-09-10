@@ -98,3 +98,4 @@ export async function uploadToCloudinary(
 
     return res.json();
 }
+
