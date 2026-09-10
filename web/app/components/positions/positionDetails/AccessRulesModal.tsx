@@ -154,4 +154,3 @@ export function PositionAccessRulesModal({ positionId, isPublic, opened, onClose
     </Modal>
   );
 }
-
