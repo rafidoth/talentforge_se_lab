@@ -56,4 +56,3 @@ export function OverviewTab({ positionId, position }: OverviewTabProps) {
   );
 }
 
-

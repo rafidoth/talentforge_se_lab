@@ -54,4 +54,3 @@ export function AccessRulesTable({ rules, operatorLabels, onAddRule, onDeleteRul
     </>
   );
 }
-
