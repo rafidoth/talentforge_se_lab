@@ -33,3 +33,4 @@ export function formatTimePeriod(startDate: string | null, endDate: string | nul
     return `${start} — ${end}`;
 }
 
+
