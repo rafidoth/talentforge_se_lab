@@ -67,3 +67,4 @@ export function CandidateCvProjects({ positionId, maxProjects, selectedProjectId
         </Stack>
     );
 }
+
