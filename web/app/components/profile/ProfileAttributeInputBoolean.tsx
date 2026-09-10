@@ -29,4 +29,3 @@ export function ProfileAttributeInputBoolean({ attribute, value, onChange }: Pro
         </Radio.Group>
     );
 }
-

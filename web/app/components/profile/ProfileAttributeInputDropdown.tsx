@@ -21,4 +21,3 @@ export function ProfileAttributeInputDropdown({ attribute, value, onChange }: Pr
         />
     );
 }
-
