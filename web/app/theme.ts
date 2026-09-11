@@ -255,3 +255,4 @@ const theme: MantineThemeOverride = {
 };
 
 export default theme;
+
