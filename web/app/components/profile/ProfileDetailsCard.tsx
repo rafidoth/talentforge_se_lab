@@ -299,4 +299,3 @@ export function ProfileDetailsCard({ title, icon }: ProfileDetailsCardProps) {
     </Paper>
   );
 }
-
