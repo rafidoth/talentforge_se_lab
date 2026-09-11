@@ -18,4 +18,3 @@ export function ProfileAttributeInputText({ attribute, value, onChange }: Props)
         />
     );
 }
-
