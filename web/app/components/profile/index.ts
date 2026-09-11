@@ -9,4 +9,3 @@ export { getAttributeValue, getProfileImageUrl, getDisplayName } from './profile
 export { ProjectsSection } from './ProjectsSection';
 export { ProfileInfoSection } from './ProfileInfoSection';
 export { SalesforceSyncModal } from './SalesforceSyncModal';
-
