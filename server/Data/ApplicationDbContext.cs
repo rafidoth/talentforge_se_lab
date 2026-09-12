@@ -1,0 +1,30 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using server.Entities;
+
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser>(options)
+{
+    public DbSet<AppAttribute> Attributes { get; set; }
+    public DbSet<AttributeType> AttributeTypes { get; set; }
+    public DbSet<AttributeCategory> AttributeCategories { get; set; }
+    public DbSet<AttributeDropdownOption> AttributeDropdownOptions { get; set; }
+    public DbSet<ProfileAttribute> ProfileAttributes { get; set; }
+    public DbSet<Project> Projects { get; set; }
+    public DbSet<TechnologyTag> TechnologyTags { get; set; }
+    public DbSet<ProjectTechnologyTag> ProjectTechnologyTags { get; set; }
+    public DbSet<UserPreference> UserPreferences { get; set; }
+    public DbSet<Position> Positions { get; set; }
+    public DbSet<PositionAttribute> PositionAttributes { get; set; }
+    public DbSet<PositionAccessRule> PositionAccessRules { get; set; }
+    public DbSet<PositionTechnologyTag> PositionTechnologyTags { get; set; }
+    public DbSet<Cv> Cvs { get; set; }
+    public DbSet<CvLike> CvLikes { get; set; }
+    public DbSet<PositionDiscussionPost> PositionDiscussionPosts { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+        builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+    }
+}
